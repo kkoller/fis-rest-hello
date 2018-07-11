@@ -74,8 +74,6 @@ objects:
       git:
         ref: ${GIT_REF}
         uri: ${GIT_REPO}
-      sourceSecret:
-        name: bitbucket-secret
       type: Git
     strategy:
       sourceStrategy:
@@ -167,7 +165,7 @@ parameters:
   displayName: Git Repository URL
   name: GIT_REPO
   required: true
-  value: https://gitlab.consulting.redhat.com/nlg/fis-rest-hello.git
+  value: https://github.com/kkoller/fis-rest-hello.git
 - description: Path within Git project to build; empty for root project directory.
   name: CONTEXT_DIR
   value: 
