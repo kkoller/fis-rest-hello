@@ -10,6 +10,23 @@ metadata:
     version: "2.0"
 objects:
 - apiVersion: v1
+  kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: fis-java-openshift
+  spec:
+    tags:
+    - name: '2.0'
+      annotations:
+        description: JBoss Fuse Integration Services 2.0 Java S2I images.
+        iconClass: icon-jboss
+        tags: builder,jboss-fuse,java,xpaas
+        supports: jboss-fuse:6.3.0,java:8,xpaas:1.2
+        version: '2.0'
+      from:
+        kind: DockerImage
+        name: registry.access.redhat.com/jboss-fuse-6/fis-java-openshift:2.0
+- apiVersion: v1
   kind: Route
   metadata:
     annotations:
@@ -55,6 +72,7 @@ objects:
   spec: {}
   status:
     dockerImageRepository: ""
+
 - apiVersion: v1
   kind: BuildConfig
   metadata:
@@ -90,7 +108,7 @@ objects:
         from:
           kind: ImageStreamTag
           name: fis-java-openshift:${BUILDER_VERSION}
-          namespace: ${APP_NAME}
+          namespace: ${PROJECT_NAME}
         incremental: true
       type: Source
   status:
@@ -161,6 +179,10 @@ parameters:
   name: APP_NAME
   required: true
   value: helloworld-fis 
+- description: Name of the openshift project in which the template will be used
+  displayName: Openshift Project Name
+  name: PROJECT_NAME
+  required: true
 - description: The URL of the repository with your application source code.
   displayName: Git Repository URL
   name: GIT_REPO
